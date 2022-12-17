@@ -14,6 +14,7 @@ function createGrid(num) {
         div.classList.add('grid-item');
         div.style.width = divWidth + 'px';
         div.style.height = divWidth + 'px';
+        div.addEventListener('mouseover', changeColor);
         newGrid.appendChild(div);
     }
 
@@ -43,3 +44,8 @@ function selectSize() {
 
 let gridButton = document.querySelector('#choose-grid');
 gridButton.addEventListener('click', selectSize);
+
+function changeColor(e) {
+    console.log(e);
+    e.target.style.backgroundColor = 'black';
+}
