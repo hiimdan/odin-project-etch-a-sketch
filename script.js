@@ -4,7 +4,10 @@ function createGrid(num) {
     let newGrid = document.createElement('div');
     newGrid.classList.add('grid-inner-container');
 
-    let divWidth = Math.floor((960 - 15 - 5 * (num - 1)) / num);
+    let gap = num <= 70 ? 3 : 1;
+    newGrid.style.gap = gap + 'px'; 
+
+    let divWidth = (960 - 10 - gap * (num - 1)) / num;
 
     for (let i = 0; i < (num **2); i++) {
         let div = document.createElement('div');
@@ -16,3 +19,27 @@ function createGrid(num) {
 
     currentGrid.replaceWith(newGrid);
 }
+
+function selectSize() {
+    let response = prompt('Enter a value between 1 and 100');
+    if (response === '' || response === null) {
+        return;
+    }
+
+    response = parseInt(response);
+    console.log(response);
+    if (isNaN(response)) {
+        return alert('Invalid Input');
+    }
+    if (response < 1) {
+        return alert('Value is too small');
+    }
+    if (response > 100) {
+        return alert('Value is too large');
+    }
+
+    createGrid(response);
+}
+
+let gridButton = document.querySelector('#choose-grid');
+gridButton.addEventListener('click', selectSize);

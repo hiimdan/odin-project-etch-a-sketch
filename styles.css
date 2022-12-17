@@ -1,14 +1,42 @@
+body {
+    display: flex;
+    justify-content: center;
+}
+
+.grid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 5px;
+}
+
+.main-container p {
+    text-align: center;
+    margin: 0;
+    font-weight: bold;
+    font-size: 1.2rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#choose-grid {
+    padding: 5px 4px;
+    font-weight: bold;
+}
+
 .grid-outer-container {
     width: 960px;
     height: 960px;
+    border: 1px solid black;
 }
 
 .grid-inner-container {
-    border: 1px solid black;
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
     padding: 5px;
+    justify-content: space-between;
+    align-content: space-between;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 .grid-item {
