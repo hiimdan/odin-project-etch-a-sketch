@@ -18,7 +18,8 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-#choose-grid {
+.options-btn {
+    margin-left: 3px;
     padding: 5px 4px;
     font-weight: bold;
 }

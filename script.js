@@ -45,7 +45,16 @@ function selectSize() {
 let gridButton = document.querySelector('#choose-grid');
 gridButton.addEventListener('click', selectSize);
 
+let resetButton = document.querySelector('#reset');
+resetButton.addEventListener('click', () => {
+    let grid = document.querySelector('.grid-inner-container');
+    if (grid.children.length === 0) {
+        return;
+    } else {
+        createGrid(Math.sqrt(grid.children.length));
+    }
+})
+
 function changeColor(e) {
-    console.log(e);
     e.target.style.backgroundColor = 'black';
 }
