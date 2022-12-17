@@ -1,0 +1,17 @@
+.grid-outer-container {
+    width: 960px;
+    height: 960px;
+}
+
+.grid-inner-container {
+    border: 1px solid black;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 5px;
+}
+
+.grid-item {
+    box-sizing: border-box;
+    border: 1px solid black;
+}
