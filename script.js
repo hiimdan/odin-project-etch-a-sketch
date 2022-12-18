@@ -1,7 +1,6 @@
 let currentGridColor = 'black';
 
 function createGrid(num) {
-    let outerGrid = document.querySelector('.grid-outer-container');
     let currentGrid = document.querySelector('.grid-inner-container');
     let newGrid = document.createElement('div');
     newGrid.classList.add('grid-inner-container');
@@ -51,14 +50,18 @@ let resetButton = document.querySelector('#reset');
 resetButton.addEventListener('click', resetGrid);
 
 let blackWhiteButton = document.querySelector('#black-white');
-blackWhiteButton.addEventListener('click', () => {
+blackWhiteButton.addEventListener('click', e => {
     currentGridColor = 'black';
+    e.target.classList.add('pressed');
+    document.querySelector('#multi-color').classList.remove('pressed');
     resetGrid();
 })
 
 let colorButton = document.querySelector('#multi-color');
-colorButton.addEventListener('click', () => {
+colorButton.addEventListener('click', e => {
     currentGridColor = 'color';
+    e.target.classList.add('pressed');
+    document.querySelector('#black-white').classList.remove('pressed');
     resetGrid();
 })
 
@@ -72,37 +75,23 @@ function resetGrid() {
 }
 
 function getRandomColor() {
-    let hue = Math.floor(Math.random() * 361);
-    let sat = Math.floor(Math.random() * 101);
-    let lightness = Math.floor(Math.random() * 101);
-    if (lightness < 100 && lightness >= 10) {
-        lightness = '0' + lightness;
-    } else if (lightness < 10) {
-        lightness = '00' + lightness;
-    }
-
-    return `hsl(${hue}, ${sat}%, ${lightness}%)`;
+    return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
 }
 
 function changeColor(e) {
     if (currentGridColor === 'black') {
         e.target.style.backgroundColor = 'black';
     } else {
-        console.log(e.target.style.backgroundColor)
         if (!e.target.style.backgroundColor) {
             e.target.style.backgroundColor = getRandomColor();
+            console.log('hello');
         } else {
-            let currentLight = parseInt(e.target.style.backgroundColor.slice(-5, -2));
-            if (currentLight >= 20) {
-                e.target.style.backgroundColor = e.target.style.backgroundColor.slice(0, -5) + '0' + (currentLight - 10) + '%)';
-            } else if (currentLight > 10) {
-                e.target.style.backgroundColor = e.target.style.backgroundColor.slice(0, -5) + '00' + (currentLight - 10) + '%)';
-            } else if (currentLight > 0) {
-                e.target.style.backgroundColor = e.target.style.backgroundColor.slice(0, -5) + '000%)';
-            }
-            console.log(e.target.style.backgroundColor)
+            let colors = e.target.style.backgroundColor.slice(4, -1).split(', ');
+            let red = colors[0] >= 26 ? colors[0] - 26 : 0;
+            let green = colors[1] >= 26 ? colors[1] - 26 : 0;
+            let blue = colors[2] >= 26 ? colors[2] - 26 : 0;
+            e.target.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
         }
     }
 }
 
-'hsl(30, 30% 100%)'

@@ -24,6 +24,10 @@ body {
     font-weight: bold;
 }
 
+.pressed {
+    background-color: rgb(214, 214, 214);
+}
+
 .grid-outer-container {
     width: 960px;
     height: 960px;
