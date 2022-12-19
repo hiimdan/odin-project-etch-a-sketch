@@ -2,10 +2,12 @@ let currentGridColor = 'black';
 
 function createGrid(num) {
     let currentGrid = document.querySelector('.grid-inner-container');
+    currentGrid.oncontextmenu = preventDefaultBehavior;
+    currentGrid.addEventListener('dragstart', preventDefaultBehavior);
     let newGrid = document.createElement('div');
     newGrid.classList.add('grid-inner-container');
 
-    let gap = num <= 70 ? 3 : 1;
+    let gap = num < 50 ? 3 : num < 70 ? 2 : num < 80 ? 1 : 0;
     newGrid.style.gap = gap + 'px'; 
 
     let divWidth = (960 - 10 - gap * (num - 1)) / num;
@@ -16,6 +18,10 @@ function createGrid(num) {
         div.style.width = divWidth + 'px';
         div.style.height = divWidth + 'px';
         div.addEventListener('mouseover', changeColor);
+        div.addEventListener('mousedown', changeColor);
+        div.oncontextmenu = preventDefaultBehavior;
+        // div.setAttribute('draggable', false);
+        div.addEventListener('dragstart', preventDefaultBehavior);
         newGrid.appendChild(div);
     }
 
@@ -29,7 +35,6 @@ function selectSize() {
     }
 
     response = parseInt(response);
-    console.log(response);
     if (isNaN(response)) {
         return alert('Invalid Input');
     }
@@ -74,24 +79,37 @@ function resetGrid() {
     }
 }
 
+function preventDefaultBehavior(e) {
+    e.preventDefault();
+    e.stopPropagation();
+}
+
 function getRandomColor() {
     return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
 }
 
 function changeColor(e) {
-    if (currentGridColor === 'black') {
-        e.target.style.backgroundColor = 'black';
-    } else {
-        if (!e.target.style.backgroundColor) {
-            e.target.style.backgroundColor = getRandomColor();
-            console.log('hello');
+    if (e.buttons === 1) {
+        if (currentGridColor === 'black') {
+            e.target.style.backgroundColor = 'black';
         } else {
-            let colors = e.target.style.backgroundColor.slice(4, -1).split(', ');
-            let red = colors[0] >= 26 ? colors[0] - 26 : 0;
-            let green = colors[1] >= 26 ? colors[1] - 26 : 0;
-            let blue = colors[2] >= 26 ? colors[2] - 26 : 0;
-            e.target.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+            if (!e.target.style.backgroundColor) {
+                e.target.style.backgroundColor = getRandomColor();
+            } else {
+                let colors = e.target.style.backgroundColor.slice(4, -1).split(', ');
+                let red = colors[0] >= 26 ? colors[0] - 26 : 0;
+                let green = colors[1] >= 26 ? colors[1] - 26 : 0;
+                let blue = colors[2] >= 26 ? colors[2] - 26 : 0;
+                e.target.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+            }
+        }
+    } else if (e.buttons === 2) {
+        e.stopPropagation();
+        e.preventDefault();
+        if (e.target.style.backgroundColor) {
+            e.target.style.backgroundColor = '';
         }
     }
+    
 }
 
