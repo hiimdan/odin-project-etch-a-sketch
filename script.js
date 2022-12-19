@@ -2,10 +2,10 @@ let currentGridColor = 'black';
 
 function createGrid(num) {
     let currentGrid = document.querySelector('.grid-inner-container');
-    currentGrid.oncontextmenu = preventDefaultBehavior;
-    currentGrid.addEventListener('dragstart', preventDefaultBehavior);
     let newGrid = document.createElement('div');
     newGrid.classList.add('grid-inner-container');
+    newGrid.oncontextmenu = preventDefaultBehavior;
+    newGrid.addEventListener('dragstart', preventDefaultBehavior);
 
     let gap = num < 50 ? 3 : num < 70 ? 2 : num < 80 ? 1 : 0;
     newGrid.style.gap = gap + 'px'; 
@@ -15,12 +15,14 @@ function createGrid(num) {
     for (let i = 0; i < (num **2); i++) {
         let div = document.createElement('div');
         div.classList.add('grid-item');
+        if (num >= 80) {
+            div.classList.add('compact');
+        }
         div.style.width = divWidth + 'px';
         div.style.height = divWidth + 'px';
         div.addEventListener('mouseover', changeColor);
         div.addEventListener('mousedown', changeColor);
         div.oncontextmenu = preventDefaultBehavior;
-        // div.setAttribute('draggable', false);
         div.addEventListener('dragstart', preventDefaultBehavior);
         newGrid.appendChild(div);
     }
